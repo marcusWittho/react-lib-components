@@ -1,0 +1,27 @@
+{
+  "name": "react-lib-components",
+  "version": "0.0.1",
+  "description": "This is a react component library.",
+  "homepage": "https://github.com/marcusWittho/react-lib-components#readme",
+  "bugs": {
+    "url": "https://github.com/marcusWittho/react-lib-components/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcusWittho/react-lib-components.git"
+  },
+  "license": "MIT",
+  "author": "Marcus Lima Witthoeft",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {},
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  }
+}
