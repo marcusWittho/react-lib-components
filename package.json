@@ -6,6 +6,22 @@
   "bugs": {
     "url": "https://github.com/marcusWittho/react-lib-components/issues"
   },
+    "jest": {
+    "testEnvironment": "jsdom"
+  },
+  "babel": {
+    "sourceType": "unambiguous",
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-typescript",
+      [
+        "@babel/preset-react",
+        {
+          "runtime": "automatic"
+        }
+      ]
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/marcusWittho/react-lib-components.git"
@@ -15,6 +31,10 @@
   "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -27,13 +47,22 @@
     "build:types": "tsc -p tsconfig.build.json",
     "build:js": "rollup -c",
     "build": "npm run clean && npm run build:types && npm run build:js",
-    "dev": "npm run clean && npm run build:types && rollup -c -w"
+    "dev": "npm run clean && npm run build:types && rollup -c -w",
+    "test": "jest --watchAll --verbose"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.29.2",
+    "@babel/preset-react": "^7.28.5",
+    "@babel/preset-typescript": "^7.28.5",
     "@rollup/plugin-commonjs": "^29.0.2",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-typescript": "^12.3.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/jest": "^30.0.0",
     "@types/react": "^19.2.14",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "rollup": "^4.60.2",
