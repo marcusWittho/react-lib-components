@@ -54,13 +54,16 @@
     "build-storybook": "storybook build",
     "prepare": "husky",
     "lint": "eslint ./src/ --ext .ts,.tsx",
-    "lint:fix": "eslint ./src --ext .ts,.tsx --fix"
+    "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
+    "release": "standard-version"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.29.2",
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
     "@chromatic-com/storybook": "^5.1.2",
+    "@commitlint/cli": "^20.5.2",
+    "@commitlint/config-conventional": "^20.5.0",
     "@eslint/js": "^9.39.4",
     "@rollup/plugin-commonjs": "^29.0.2",
     "@rollup/plugin-node-resolve": "^16.0.3",
@@ -89,6 +92,7 @@
     "rollup": "^4.60.2",
     "rollup-plugin-dts": "^6.4.1",
     "rollup-plugin-postcss": "^4.0.2",
+    "standard-version": "^9.5.0",
     "storybook": "^10.3.5",
     "styled-components": "^6.4.1",
     "tslib": "^2.8.1",
