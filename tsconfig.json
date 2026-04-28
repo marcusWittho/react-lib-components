@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
+    "target": "ESNext",
     "lib": ["DOM", "ESNext"],
     "jsx": "react-jsx",
 
@@ -11,11 +11,8 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
 
-    "declaration": true,
-    "declarationMap": true,
     "sourceMap": true,
 
-    "outDir": "dist",
     "rootDir": "src",
 
     "isolatedModules": true
