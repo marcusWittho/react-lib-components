@@ -29,7 +29,7 @@ jobs:
       - checkout
       - node/install-packages
       - run:
-          name: Build
+          name: Run build
           command: npm run build
 
 workflows:
