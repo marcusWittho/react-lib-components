@@ -11,8 +11,8 @@ jobs:
       - checkout
       - node/install-packages
       - run:
-        name: Lint code
-        command: npm run lint:fix
+          name: Lint code
+          command: npm run lint:fix
   run_tests:
     executor: node/default
     description: Run tests
@@ -20,8 +20,8 @@ jobs:
       - checkout
       - node/install-packages
       - run:
-        name: Run tests
-        command: npm run test:ci
+          name: Run tests
+          command: npm run test:ci
   build:
     executor: node/default
     description: Build
@@ -29,8 +29,8 @@ jobs:
       - checkout
       - node/install-packages
       - run:
-        name: Build
-        command: npm run build
+          name: Build
+          command: npm run build
 
 workflows:
   build_app:
