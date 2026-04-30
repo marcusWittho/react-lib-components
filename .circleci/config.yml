@@ -39,7 +39,7 @@ jobs:
       - node/install-packages
       - run:
           name: Set up git credentials
-          command:
+          command: |
             git config --global user.email $GIT_EMAIL
             git config --global user.name $GIT_NAME
       - run:
