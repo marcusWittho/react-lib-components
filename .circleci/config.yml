@@ -38,6 +38,11 @@ jobs:
       - checkout
       - node/install-packages
       - run:
+          name: Set up git credentials
+          command:
+            git config --global user.email $GIT_EMAIL
+            git config --global user.name $GIT_NAME
+      - run:
           name: Run release
           command: npm run release
   publish_to_npm:
@@ -47,8 +52,13 @@ jobs:
       - checkout
       - node/install-packages
       - run:
+          name: Login to npm
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >/.npmrc
+      - run:
           name: Publish to npm
           command: npm publish
+          environment:
+            NPM_TOKEN: $NPM_TOKEN
 
 workflows:
   build_app:
