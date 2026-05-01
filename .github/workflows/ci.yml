@@ -98,10 +98,17 @@ jobs:
 
           CURRENT_VERSION=$(npm show "$PACKAGE_NAME" version 2>/dev/null || echo "0.0.0")
 
-          if [ "$CURRENT_VERSION" != "$LOCAL_VERSION" ]; then
-            echo "Publishing to NPM..."
+          if npm show "$PACKAGE_NAME" version > /dev/null 2>&1; then
+            CURRENT_VERSION=$(npm show "$PACKAGE_NAME" version)
+            if [ "$CURRENT_VERSION" != "$LOCAL_VERSION" ]; then
+              echo "Publishing (new version)..."
+              echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+              npm publish
+            else
+              echo "Skipping publish (same version)"
+            fi
+          else
+            echo "Publishing (first release)..."
             echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
             npm publish
-          else
-            echo "Skipping publish"
           fi
