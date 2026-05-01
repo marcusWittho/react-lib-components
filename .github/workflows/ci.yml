@@ -1,0 +1,105 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  lint_code:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint code
+        run: npm run lint:fix
+
+  run_tests:
+    runs-on: ubuntu-22.04
+    needs: lint_code
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - run: npm install
+
+      - name: Run tests
+        run: npm run test:ci
+
+  build:
+    runs-on: ubuntu-22.04
+    needs: run_tests
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - run: npm install
+
+      - name: Build
+        run: npm run build
+
+  run_release:
+    runs-on: ubuntu-22.04
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - run: npm install
+
+      - name: Set git config
+        run: |
+          git config --global user.email "${{ secrets.GIT_EMAIL }}"
+          git config --global user.name "${{ secrets.GIT_NAME }}"
+
+      - name: Run release
+        run: npm run release
+
+  publish_to_npm:
+    runs-on: ubuntu-22.04
+    needs: run_release
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+
+      - run: npm install
+
+      - name: Publish to npm if version changed
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          CURRENT_VERSION=$(npm show imran-codes-react-component-library version)
+          LOCAL_VERSION=$(node -pe "require('./package.json').version")
+
+          if [ "$CURRENT_VERSION" != "$LOCAL_VERSION" ]; then
+            echo "Publishing..."
+            echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+            npm publish
+          else
+            echo "Skipping publish"
+          fi
