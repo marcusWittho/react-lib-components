@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 24
 
@@ -27,9 +27,9 @@ jobs:
     needs: lint_code
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
 
@@ -43,9 +43,9 @@ jobs:
     needs: run_tests
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
 
@@ -59,9 +59,9 @@ jobs:
     needs: build
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
 
@@ -80,9 +80,9 @@ jobs:
     needs: run_release
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org/
@@ -93,8 +93,10 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          CURRENT_VERSION=$(npm show imran-codes-react-component-library version)
+          PACKAGE_NAME=$(node -pe "require('./package.json').name")
           LOCAL_VERSION=$(node -pe "require('./package.json').version")
+
+          CURRENT_VERSION=$(npm show $PACKAGE_NAME version 2>/dev/null || echo "0.0.0")
 
           if [ "$CURRENT_VERSION" != "$LOCAL_VERSION" ]; then
             echo "Publishing..."
