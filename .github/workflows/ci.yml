@@ -96,7 +96,7 @@ jobs:
           PACKAGE_NAME=$(node -pe "require('./package.json').name")
           LOCAL_VERSION=$(node -pe "require('./package.json').version")
 
-          CURRENT_VERSION=$(npm show $PACKAGE_NAME version 2>/dev/null || echo "0.0.0")
+          CURRENT_VERSION=$(npm show "$PACKAGE_NAME" version 2>/dev/null || echo "0.0.0")
 
           if [ "$CURRENT_VERSION" != "$LOCAL_VERSION" ]; then
             echo "Publishing..."
